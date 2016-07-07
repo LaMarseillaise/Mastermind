@@ -60,5 +60,9 @@ describe Mastermind::Code do
     it "returns false when the codes are not the same" do
       expect(code_red == code_blue).to be false
     end
+
+    it "returns false when given something that is not a code" do
+      expect(code_red == 1).to be false
+    end
   end
 end

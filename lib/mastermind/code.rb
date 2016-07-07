@@ -39,7 +39,9 @@ module Mastermind
     end
 
     def ==(code)
-      length == code.length && exact_matches_with(code) == length
+      code.is_a?(Mastermind::Code) &&
+      length == code.length &&
+      exact_matches_with(code) == length
     end
   end
 end
