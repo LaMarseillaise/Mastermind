@@ -18,6 +18,12 @@ describe Mastermind::Code do
     end
   end
 
+  describe ".from" do
+    it "generates a code from the given colors" do
+      expect(Mastermind::Code.from([:green, :green, :red, :red])).to eq(green2_red2)
+    end
+  end
+
   describe "#color_counts" do
     it "stores the number of red pieces" do
       expect(code_red.color_counts[:red]).to eq 4
@@ -49,6 +55,16 @@ describe Mastermind::Code do
 
     it "returns 4 when there are four color matches" do
       expect(code_red.color_matches_with(other_red)).to eq 4
+    end
+  end
+
+  describe "#partial_matches_with" do
+    it "does not double count exact matches" do
+      expect(
+        red2_blue1.partial_matches_with(code_red)
+      ).not_to eq(
+        red2_blue1.color_matches_with(code_red)
+      )
     end
   end
 

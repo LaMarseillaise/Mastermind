@@ -6,6 +6,10 @@ module Mastermind
       Array.new(number_of_pieces) { Mastermind::Piece.new }
     end
 
+    def self.from(colors)
+      new(sequence: colors.map { |color| Piece.new(color: color) })
+    end
+
     def initialize(sequence: Mastermind::Code.random)
       @sequence = sequence
     end
@@ -36,6 +40,10 @@ module Mastermind
         sum += [quantity, other_colors[color] || 0].min
       end
       sum
+    end
+
+    def partial_matches_with(code)
+      color_matches_with(code) - exact_matches_with(code)
     end
 
     def ==(code)

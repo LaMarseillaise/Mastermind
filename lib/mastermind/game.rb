@@ -27,7 +27,7 @@ module Mastermind
     end
 
     def count_partial_matches(code)
-      @secret.color_matches_with(code) - count_exact_matches(code)
+      @secret.partial_matches_with(code)
     end
 
     def over?

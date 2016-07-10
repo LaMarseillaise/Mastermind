@@ -21,12 +21,6 @@ describe Mastermind::Game do
     end
   end
 
-  describe "#count_partial_matches" do
-    it "does not double count exact matches" do
-      expect(game.count_partial_matches(guess)).not_to eq(secret.color_matches_with(guess))
-    end
-  end
-
   describe "#over?" do
     it "is not over at the start" do
       expect(game.over?).to be false
