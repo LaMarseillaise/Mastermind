@@ -9,4 +9,9 @@ require "mastermind/view"
 require "mastermind/controller"
 
 module Mastermind
+  def self.run_in_console
+    controller = Mastermind::Controller.new
+    controller.setup
+    loop { controller.start_game }
+  end
 end
