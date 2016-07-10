@@ -6,6 +6,7 @@ require "mastermind/player"
 require "mastermind/computer"
 require "mastermind/human"
 require "mastermind/view"
+require "mastermind/controller"
 
 module Mastermind
 end
