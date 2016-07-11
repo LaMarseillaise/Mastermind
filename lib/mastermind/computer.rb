@@ -1,7 +1,8 @@
 module Mastermind
   class Computer < Player
     def get_guess_for(game)
-      Code.new(sequence: Code.random(game.secret_length))
+      @knuth = Knuth.new(game) unless @knuth && @knuth.game == game
+      Code.from(@knuth.prepare_guess)
     end
 
     def get_code(length:)

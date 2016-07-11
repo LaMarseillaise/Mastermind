@@ -7,6 +7,7 @@ require "mastermind/computer"
 require "mastermind/human"
 require "mastermind/view"
 require "mastermind/controller"
+require "mastermind/knuth"
 
 module Mastermind
   def self.run_in_console
