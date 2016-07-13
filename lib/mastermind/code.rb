@@ -11,6 +11,7 @@ module Mastermind
     end
 
     def initialize(sequence: Mastermind::Code.random)
+      raise ArgumentError unless sequence.all? { |piece| piece.is_a? Piece }
       @sequence = sequence
     end
 
@@ -26,6 +27,7 @@ module Mastermind
     end
 
     def exact_matches_with(code)
+      raise ArgumentError unless code.is_a? Code
       sum = 0
       sequence.each_with_index do |piece, idx|
         sum += 1 if piece == code.sequence[idx]
@@ -34,6 +36,7 @@ module Mastermind
     end
 
     def color_matches_with(code)
+      raise ArgumentError unless code.is_a? Code
       other_colors = code.color_counts
       sum = 0
       color_counts.each do |color, quantity|
@@ -43,11 +46,12 @@ module Mastermind
     end
 
     def partial_matches_with(code)
+      raise ArgumentError unless code.is_a? Code
       color_matches_with(code) - exact_matches_with(code)
     end
 
     def ==(code)
-      code.is_a?(Mastermind::Code) &&
+      code.is_a?(Code) &&
       length == code.length &&
       exact_matches_with(code) == length
     end

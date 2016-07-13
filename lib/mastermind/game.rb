@@ -3,6 +3,7 @@ module Mastermind
     attr_reader :guesses, :codemaker, :codebreaker, :max_attempts
 
     def initialize(secret: Code.new, guesses: [], codemaker: nil, codebreaker: nil)
+      raise ArgumentError unless secret.is_a? Code
       @secret = secret
       @guesses = guesses
       @codemaker = codemaker || Player.new(name: "AbstractCodemaker")
@@ -19,14 +20,17 @@ module Mastermind
     end
 
     def guess(code)
+      raise ArgumentError unless code.is_a? Code
       @guesses << code
     end
 
     def count_exact_matches(code)
+      raise ArgumentError unless code.is_a? Code
       @secret.exact_matches_with(code)
     end
 
     def count_partial_matches(code)
+      raise ArgumentError unless code.is_a? Code
       @secret.partial_matches_with(code)
     end
 
