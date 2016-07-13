@@ -3,14 +3,15 @@ module Mastermind
     attr_reader :sequence
 
     def self.random(number_of_pieces = 4)
-      Array.new(number_of_pieces) { Mastermind::Piece.new }
+      sequence = Array.new(number_of_pieces) { Piece.new }
+      new(sequence: sequence)
     end
 
     def self.from(colors)
       new(sequence: colors.map { |color| Piece.new(color: color) })
     end
 
-    def initialize(sequence: Mastermind::Code.random)
+    def initialize(sequence:)
       raise ArgumentError unless sequence.all? { |piece| piece.is_a? Piece }
       @sequence = sequence
     end

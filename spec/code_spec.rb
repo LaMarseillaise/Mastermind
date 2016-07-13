@@ -13,8 +13,8 @@ describe Mastermind::Code do
 
   describe ".random" do
     it "generates a random sequence of pieces" do
-      expect(Mastermind::Code.random).to be_a(Array)
-      expect(Mastermind::Code.random).to all(be_a(Mastermind::Piece))
+      expect(Mastermind::Code.random).to be_a(Mastermind::Code)
+      expect(Mastermind::Code.random.sequence).to all(be_a(Mastermind::Piece))
     end
   end
 

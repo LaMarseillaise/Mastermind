@@ -6,7 +6,7 @@ module Mastermind
     end
 
     def get_code(length:)
-      Code.new(sequence: Code.random(length))
+      Code.random(length)
     end
   end
 end

@@ -2,7 +2,7 @@ module Mastermind
   class Game
     attr_reader :guesses, :codemaker, :codebreaker, :max_attempts
 
-    def initialize(secret: Code.new, guesses: [], codemaker: nil, codebreaker: nil)
+    def initialize(secret: Code.random, guesses: [], codemaker: nil, codebreaker: nil)
       raise ArgumentError unless secret.is_a? Code
       @secret = secret
       @guesses = guesses
