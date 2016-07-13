@@ -1,15 +1,11 @@
 require "spec_helper"
 
 describe Mastermind::Code do
-  let(:red) { Mastermind::Piece.new(color: :red) }
-  let(:blue) { Mastermind::Piece.new(color: :blue) }
-  let(:green) { Mastermind::Piece.new(color: :green) }
-
-  let(:code_blue) { Mastermind::Code.new(sequence: [blue, blue, blue, blue]) }
-  let(:code_red)  { Mastermind::Code.new(sequence: [red, red, red, red]) }
-  let(:other_red) { Mastermind::Code.new(sequence: [red, red, red, red]) }
-  let(:red2_blue1){ Mastermind::Code.new(sequence: [red, red, blue, green]) }
-  let(:green2_red2) { Mastermind::Code.new(sequence: [green, green, red, red]) }
+  let(:code_blue) { Mastermind::Code.from([:blue, :blue, :blue, :blue]) }
+  let(:code_red)  { Mastermind::Code.from([:red, :red, :red, :red]) }
+  let(:other_red) { Mastermind::Code.from([:red, :red, :red, :red]) }
+  let(:red2_blue1){ Mastermind::Code.from([:red, :red, :blue, :green]) }
+  let(:green2_red2) { Mastermind::Code.from([:green, :green, :red, :red]) }
 
   describe ".random" do
     it "generates a random sequence of pieces" do

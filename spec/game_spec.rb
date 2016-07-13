@@ -1,12 +1,8 @@
 require "spec_helper"
 
 describe Mastermind::Game do
-  let(:red) { Mastermind::Piece.new(color: :red) }
-  let(:blue) { Mastermind::Piece.new(color: :blue) }
-  let(:green) { Mastermind::Piece.new(color: :green) }
-
-  let(:secret) { Mastermind::Code.new(sequence: [red, red, green, blue]) }
-  let(:guess) { Mastermind::Code.new(sequence: [blue, green, green, red]) }
+  let(:secret) { Mastermind::Code.from([:red, :red, :red, :red]) }
+  let(:guess) { Mastermind::Code.from([:blue, :blue, :blue, :blue]) }
 
   let(:game) { Mastermind::Game.new(secret: secret) }
 
