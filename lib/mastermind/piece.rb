@@ -9,8 +9,8 @@ module Mastermind
       @color = color
     end
 
-    def ==(other_piece)
-      other_piece.is_a?(Piece) && color == other_piece.color
+    def ==(piece)
+      piece.is_a?(Piece) && color == piece.color
     end
   end
 end
