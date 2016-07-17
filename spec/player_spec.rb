@@ -1,13 +1,13 @@
 require "spec_helper"
 
-describe Mastermind::Player do
-  let(:player) { Mastermind::Player.new(name: "Player") }
-  let(:game) { Mastermind::Game.new(codebreaker: player) }
+describe Player do
+  let(:player) { Player.new(name: "Player") }
+  let(:game) { Game.new(codebreaker: player) }
 
   describe "#initialize" do
     it "must have a name" do
       expect{player}.not_to raise_error
-      expect{Mastermind::Player.new}.to raise_error ArgumentError
+      expect{Player.new}.to raise_error ArgumentError
     end
   end
 

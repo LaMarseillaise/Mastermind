@@ -1,7 +1,7 @@
 require "spec_helper"
 
-describe Mastermind::View do
-  subject { Mastermind::View }
+describe Console::View do
+  subject { Console::View }
 
   it { is_expected.to respond_to :introduction }
   it { is_expected.to respond_to :grading_scheme }

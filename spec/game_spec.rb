@@ -1,10 +1,10 @@
 require "spec_helper"
 
-describe Mastermind::Game do
-  let(:secret) { Mastermind::Code.from([:red, :red, :red, :red]) }
-  let(:guess) { Mastermind::Code.from([:blue, :blue, :blue, :blue]) }
+describe Game do
+  let(:secret) { Game::Code.from([:red, :red, :red, :red]) }
+  let(:guess) { Game::Code.from([:blue, :blue, :blue, :blue]) }
 
-  let(:game) { Mastermind::Game.new(secret: secret) }
+  let(:game) { Game.new(secret: secret) }
 
   describe "#guess" do
     it "increments the number of attempts" do

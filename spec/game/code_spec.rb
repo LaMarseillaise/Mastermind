@@ -1,22 +1,22 @@
 require "spec_helper"
 
-describe Mastermind::Code do
-  let(:code_blue) { Mastermind::Code.from([:blue, :blue, :blue, :blue]) }
-  let(:code_red)  { Mastermind::Code.from([:red, :red, :red, :red]) }
-  let(:other_red) { Mastermind::Code.from([:red, :red, :red, :red]) }
-  let(:red2_blue1){ Mastermind::Code.from([:red, :red, :blue, :green]) }
-  let(:green2_red2) { Mastermind::Code.from([:green, :green, :red, :red]) }
+describe Game::Code do
+  let(:code_blue) { Game::Code.from([:blue, :blue, :blue, :blue]) }
+  let(:code_red)  { Game::Code.from([:red, :red, :red, :red]) }
+  let(:other_red) { Game::Code.from([:red, :red, :red, :red]) }
+  let(:red2_blue1){ Game::Code.from([:red, :red, :blue, :green]) }
+  let(:green2_red2) { Game::Code.from([:green, :green, :red, :red]) }
 
   describe ".random" do
     it "generates a random sequence of pieces" do
-      expect(Mastermind::Code.random).to be_a(Mastermind::Code)
-      expect(Mastermind::Code.random.sequence).to all(be_a(Mastermind::Piece))
+      expect(Game::Code.random).to be_a(Game::Code)
+      expect(Game::Code.random.sequence).to all(be_a(Game::Piece))
     end
   end
 
   describe ".from" do
     it "generates a code from the given colors" do
-      expect(Mastermind::Code.from([:green, :green, :red, :red])).to eq(green2_red2)
+      expect(Game::Code.from([:green, :green, :red, :red])).to eq(green2_red2)
     end
   end
 

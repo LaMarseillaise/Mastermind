@@ -5,8 +5,8 @@ module Mastermind
     def initialize(game)
       @game = game
       # 1. Create the set S of 1296 possible codes
-      @possible_guesses = Piece::COLORS.repeated_permutation(game.secret_length).to_a
-      @set = Piece::COLORS.repeated_permutation(game.secret_length).to_a
+      @possible_guesses = Game::Piece::COLORS.repeated_permutation(game.secret_length).to_a
+      @set = Game::Piece::COLORS.repeated_permutation(game.secret_length).to_a
       @game.turns.each { |turn| prune(turn) }
     end
 
@@ -24,7 +24,7 @@ module Mastermind
     def first_guess
       combination = Array.new(@game.secret_length)
       combination.map!.with_index do |item, idx|
-        idx % 2 == 0 ? Piece::COLORS.sample : combination[idx - 1]
+        idx % 2 == 0 ? Game::Piece::COLORS.sample : combination[idx - 1]
       end
     end
 
@@ -32,7 +32,7 @@ module Mastermind
     def prune(turn)
       @set.select! do |combination|
         retain?(
-          code: Code.from(combination),
+          code: Game::Code.from(combination),
           guess: turn.guess,
           exact: turn.exact,
           partial: turn.partial
@@ -52,7 +52,7 @@ module Mastermind
     def minimum_match_count
       lowest = @set.length
       @possible_guesses.each do |possible|
-        count = highest_match_count(Code.from(possible))
+        count = highest_match_count(Game::Code.from(possible))
         lowest = count if count < lowest
       end
       lowest
@@ -64,7 +64,7 @@ module Mastermind
       (0..@game.secret_length).each do |matches|
         # count how many possibilities in S would be retained
         count = @set.count do |combination|
-          Code.from(combination).color_matches_with(guess) == matches
+          Game::Code.from(combination).color_matches_with(guess) == matches
         end
         # track the highest of these
         highest = count if count > highest
@@ -74,7 +74,7 @@ module Mastermind
 
     def maximum_scoring_guesses(min_matchs)
       @possible_guesses.select do |guess|
-        highest_match_count(Code.from(guess)) == min_matchs
+        highest_match_count(Game::Code.from(guess)) == min_matchs
       end
     end
 
