@@ -60,7 +60,7 @@ module Mastermind
         width: game.secret_length,
         exact: game.count_exact_matches(guess),
         partial: game.count_partial_matches(guess),
-        attempt: game.attempts + 1
+        attempt: game.attempts
       )
       game.guess(guess)
     end
