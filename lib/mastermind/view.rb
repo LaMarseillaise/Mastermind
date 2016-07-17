@@ -39,10 +39,10 @@ module Mastermind
       "    " + BL_CORNER + HORIZONTAL * width + BM_INTER + HORIZONTAL * width + BR_CORNER
     end
 
-    def self.attempt_line(sequence, width: 4, exact: 0, partial: 0, attempt: 0)
-      "#{attempt}:".ljust(4) +
-      SIDE + guess_bar(sequence) + BLANK * (width - sequence.length) + SIDE +
-      feedback_line(exact: exact, partial: partial, width: width) + SIDE
+    def self.attempt_line(turn, width: 4)
+      "#{turn.number}:".ljust(4) +
+      SIDE + guess_bar(turn.guess.sequence) + BLANK * (width - turn.guess.sequence.length) + SIDE +
+      feedback_line(exact: turn.exact, partial: turn.partial, width: width) + SIDE
     end
 
     def self.feedback_line(exact: 0, partial: 0, width: 4)

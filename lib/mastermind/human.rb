@@ -4,7 +4,8 @@ module Mastermind
       sequence = []
 
       length.times do
-        print "\r" + View.attempt_line(sequence, width: length, attempt: attempt) if attempt
+        turn = Turn.new(guess: Code.new(sequence: sequence), number: attempt)
+        print "\r" + View.attempt_line(turn, width: length) if attempt
         color = Piece::COLORS[Human.get_choice(choices: ("1".."6")).to_i - 1]
         sequence << Piece.new(color: color)
       end

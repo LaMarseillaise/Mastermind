@@ -56,14 +56,7 @@ module Mastermind
     def make_guess(game)
       guess = game.codebreaker.get_guess_for(game)
       game.guess(guess)
-      turn = game.turns.last
-      puts "\r" + View.attempt_line(
-        turn.guess.sequence,
-        width: game.secret_length,
-        exact: turn.exact,
-        partial: turn.partial,
-        attempt: turn.number
-      )
+      puts "\r" + View.attempt_line(game.turns.last, width: game.secret_length)
     end
   end
 end
