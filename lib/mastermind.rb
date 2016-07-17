@@ -1,6 +1,7 @@
 require "mastermind/version"
 require "mastermind/piece"
 require "mastermind/code"
+require "mastermind/turn"
 require "mastermind/game"
 require "mastermind/player"
 require "mastermind/computer"

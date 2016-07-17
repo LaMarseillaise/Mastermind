@@ -7,12 +7,12 @@ module Mastermind
       # 1. Create the set S of 1296 possible codes
       @possible_guesses = Piece::COLORS.repeated_permutation(game.secret_length).to_a
       @set = Piece::COLORS.repeated_permutation(game.secret_length).to_a
-      @game.guesses.each { |guess| prune(guess) }
+      @game.turns.each { |turn| prune(turn) }
     end
 
     def prepare_guess
-      return first_guess if @game.guesses.length == 0
-      prune(@game.guesses.last)
+      return first_guess if @game.attempts == 0
+      prune(@game.turns.last)
       return @set.first if @set.length == 1
       exploratory_guess
     end
@@ -29,17 +29,17 @@ module Mastermind
     end
 
     # 3. Remove from S any code that would not give the same response if the guess were the code.
-    def prune(guess)
+    def prune(turn)
       @set.select! do |combination|
         retain?(
           code: Code.from(combination),
-          guess: guess,
-          exact: @game.count_exact_matches(guess),
-          partial: @game.count_partial_matches(guess)
+          guess: turn.guess,
+          exact: turn.exact,
+          partial: turn.partial
         )
       end
 
-      @possible_guesses.delete(guess)
+      @possible_guesses.delete(turn.guess)
     end
 
     def retain?(guess:, code:, exact:, partial:)

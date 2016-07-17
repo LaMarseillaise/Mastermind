@@ -1,18 +1,18 @@
 module Mastermind
   class Game
-    attr_reader :guesses, :codemaker, :codebreaker, :max_attempts
+    attr_reader :turns, :codemaker, :codebreaker, :max_attempts
 
     def initialize(secret: Code.random, codemaker: nil, codebreaker: nil)
       raise ArgumentError unless secret.is_a? Code
       @secret = secret
-      @guesses = []
+      @turns = []
       @codemaker = codemaker || Player.new(name: "AbstractCodemaker")
       @codebreaker = codebreaker || Player.new(name: "AbstractCodebreaker")
       @max_attempts = 12
     end
 
     def attempts
-      guesses.length
+      turns.length
     end
 
     def secret_length
@@ -21,17 +21,11 @@ module Mastermind
 
     def guess(code)
       raise ArgumentError unless code.is_a? Code
-      @guesses << code
-    end
-
-    def count_exact_matches(code)
-      raise ArgumentError unless code.is_a? Code
-      @secret.exact_matches_with(code)
-    end
-
-    def count_partial_matches(code)
-      raise ArgumentError unless code.is_a? Code
-      @secret.partial_matches_with(code)
+      @turns << Turn.new(
+        guess: code, number: attempts + 1,
+        exact: @secret.exact_matches_with(code),
+        partial: @secret.partial_matches_with(code)
+      )
     end
 
     def over?
@@ -51,7 +45,7 @@ module Mastermind
     end
 
     def code_guessed?
-      guesses.first(max_attempts).any? { |guess| guess == @secret }
+      turns.first(max_attempts).any? { |turn| turn.guess == @secret }
     end
   end
 end

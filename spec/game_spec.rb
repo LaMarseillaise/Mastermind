@@ -13,7 +13,7 @@ describe Mastermind::Game do
 
     it "adds the guess to the history of guesses" do
       game.guess(guess)
-      expect(game.guesses).to include(guess)
+      expect(game.turns.map(&:guess)).to include(guess)
     end
   end
 
