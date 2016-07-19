@@ -17,35 +17,33 @@ module Mastermind
       exploratory_guess
     end
 
-
-    private
-
     # 2. Make initial guess of 1122
     def first_guess
-      combination = Array.new(@game.secret_length)
-      combination.map!.with_index do |item, idx|
-        idx % 2 == 0 ? Game::Piece::COLORS.sample : combination[idx - 1]
+      first_color = Game::Piece::COLORS.sample
+      second_color = Game::Piece::COLORS.select { |color| color != first_color }.sample
+      Array.new(@game.secret_length) do |position|
+        position < @game.secret_length / 2 ? first_color : second_color
       end
     end
+
+    # 5. Choose from the set of guesses with the maximum score, preferring members of S
+    def exploratory_guess
+      max_scoring = maximum_scoring_guesses
+      (max_scoring & @set).sample || max_scoring.sample
+    end
+
+    private
 
     # 3. Remove from S any code that would not give the same response if the guess were the code.
     def prune(turn)
       @set.select! do |combination|
-        retain?(
-          code: Game::Code.from(combination),
-          guess: turn.guess,
-          exact: turn.exact,
-          partial: turn.partial
-        )
+        code = Game::Code.from(combination)
+        !(turn.guess == code) &&
+        turn.exact   == code.exact_matches_with(turn.guess) &&
+        turn.partial == code.partial_matches_with(turn.guess)
       end
 
       @possible_guesses.delete(turn.guess)
-    end
-
-    def retain?(guess:, code:, exact:, partial:)
-      !(code == guess) &&
-      code.exact_matches_with(guess) == exact &&
-      code.partial_matches_with(guess) == partial
     end
 
     # 4. For each possible guess, find the minimum highest match count
@@ -72,16 +70,12 @@ module Mastermind
       highest
     end
 
-    def maximum_scoring_guesses(min_matchs)
-      @possible_guesses.select do |guess|
-        highest_match_count(Game::Code.from(guess)) == min_matchs
+    # Find the possible guesses for which the highest match count is the minimum match count.
+    def maximum_scoring_guesses
+      min_matches = minimum_match_count
+      @possible_guesses.select do |possible|
+        highest_match_count(Game::Code.from(possible)) == min_matches
       end
-    end
-
-    # 5. Choose from the set of guesses with the maximum score, preferring members of S
-    def exploratory_guess
-      max_scoring = maximum_scoring_guesses(minimum_match_count)
-      (max_scoring & @set).sample || max_scoring.sample
     end
   end
 end
