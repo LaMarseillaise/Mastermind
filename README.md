@@ -1,7 +1,8 @@
 # Mastermind
 
-[Mastermind](https://en.wikipedia.org/wiki/Mastermind_(board_game)) is a two-player board game created in 1970 by [Mordecai Meirowitz](https://en.wikipedia.org/wiki/Mordecai_Meirowitz). In the game, one player is assigned as the "Code Maker" and the other the "Code Breaker".
-The Code Maker creates a secret code sequence, which is represented by four pegs, each of one of six colors. The Code Breaker then has 12 attempts to determine what the secret code sequence is by being told, by the Code Maker after each attempt, which pegs they matched exactly, or otherwise were matched with the right color in the wrong position.
+[Mastermind](https://en.wikipedia.org/wiki/Mastermind_(board_game)) is a two-player board game created in 1970 by [Mordecai Meirowitz](https://en.wikipedia.org/wiki/Mordecai_Meirowitz). This gem provides an API for building this game, as well as a demonstration version that can be run in the console.
+
+In the game, one player is assigned the role of "Code Maker" and the other "Code Breaker". The Code Maker creates a secret code sequence, which is represented by four pegs, each of one of six colors. The Code Breaker then has 12 attempts to determine what the secret code sequence is, with information on how many pegs were matched with the correct color in the correct position or a correct color in an incorrect position.
 
 ## Installation
 
@@ -21,7 +22,46 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+If you are using bundler, a demonstration of this game can be run in the terminal once the gem is installed:
+
+```bash
+$ mastermind
+```
+
+### Game
+
+The `Mastermind::Game` object is the primary point of interaction. Instances of this object contain all the information for a complete game.
+
+```ruby
+# Instantiate a game with a random secret
+game = Mastermind::Game.new
+
+# Prepare a guess
+guess = Mastermind::Game::Code.from([:red, :red, :red, :red])
+game.guess(guess)
+
+# Find how many turns there have been
+game.attempts # => 1
+
+# Check if the game is over
+game.over? # => false
+
+# Determine who has won (returns a Player instance)
+game.winner # => nil
+```
+
+### Knuth Algorithm
+
+In 1977, Donald Knuth developed an algorithm by which the correct code can be guessed in at most five turns. An implementation of this algorithm is included with this gem. To make use of it, create a new instance of the Knuth algorithm, supplying a game object:
+
+```ruby
+game = Mastermind::Game.new
+knuth = Mastermind::Knuth.new(game)
+guess = knuth.prepare_guess
+game.guess(guess)
+```
+
+A first guess can be obtained almost instantly. However, due to this problem being NP-Complete, the second guess may take several seconds. Follow-on guesses will take less time due to fewer possibilities remaining.
 
 ## Development
 
