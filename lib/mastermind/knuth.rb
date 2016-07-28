@@ -43,7 +43,7 @@ module Mastermind
         turn.partial == code.partial_matches_with(turn.guess)
       end
 
-      @possible_guesses.delete(turn.guess)
+      @possible_guesses.delete(turn.guess.sequence.map(&:color))
     end
 
     # 4. For each possible guess, find the minimum highest match count
