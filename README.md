@@ -34,7 +34,8 @@ The `Mastermind::Game` object is the primary point of interaction. Instances of 
 
 ```ruby
 # Instantiate a game with a random secret
-game = Mastermind::Game.new
+# :codemaker and :codebreaker are optional and can be any object
+game = Mastermind::Game.new(codemaker: ..., codebreaker: ...)
 
 # Prepare a guess
 guess = [:red, :red, :red, :red]
@@ -46,7 +47,8 @@ game.attempts # => 1
 # Check if the game is over
 game.over? # => false
 
-# Determine who has won (returns a Player instance)
+# Determine who has won
+# Returns the codemaker, the codebreaker, or nil
 game.winner # => nil
 ```
 
