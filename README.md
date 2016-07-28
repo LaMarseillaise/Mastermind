@@ -9,7 +9,7 @@ In the game, one player is assigned the role of "Code Maker" and the other "Code
 Add this line to your application's Gemfile:
 
 ```ruby
-gem 'mastermind'
+gem 'mastermindgame'
 ```
 
 And then execute:
@@ -18,7 +18,7 @@ And then execute:
 
 Or install it yourself as:
 
-    $ gem install mastermind
+    $ gem install mastermindgame
 
 ## Usage
 
