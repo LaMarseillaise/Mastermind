@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe Console::Controller do
-  let(:secret) { Game::Code.from([:red, :red, :red]) }
-  let(:guess) { Game::Code.from([:blue, :blue, :blue]) }
+  let(:secret) { [:red, :red, :red] }
+  let(:guess) { [:blue, :blue, :blue] }
 
   let(:player) { Player.new(name: "Somebody") }
   let(:game) { Game.new(secret: secret, codebreaker: player) }

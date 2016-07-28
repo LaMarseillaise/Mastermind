@@ -37,7 +37,7 @@ The `Mastermind::Game` object is the primary point of interaction. Instances of 
 game = Mastermind::Game.new
 
 # Prepare a guess
-guess = Mastermind::Game::Code.from([:red, :red, :red, :red])
+guess = [:red, :red, :red, :red]
 game.guess(guess)
 
 # Find how many turns there have been

@@ -5,13 +5,13 @@ module Mastermind
         sequence = []
 
         length.times do
-          turn = Game::Turn.new(guess: Game::Code.new(sequence: sequence), number: attempt)
+          turn = Game::Turn.new(guess: Game::Code.from(sequence), number: attempt)
           print "\r" + Console::View.attempt_line(turn, width: length) if attempt
           color = Game::Piece::COLORS[Human.get_choice(choices: ("1".."6")).to_i - 1]
-          sequence << Game::Piece.new(color: color)
+          sequence << color
         end
 
-        Game::Code.new(sequence: sequence)
+        sequence
       end
 
       def get_guess_for(game)
