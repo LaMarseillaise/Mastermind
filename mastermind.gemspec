@@ -4,7 +4,7 @@ $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'mastermind/version'
 
 Gem::Specification.new do |spec|
-  spec.name          = "mastermind"
+  spec.name          = "mastermind-game"
   spec.version       = Mastermind::VERSION
   spec.authors       = ["Andur Carr"]
   spec.email         = ["carr.andur@gmail.com"]
