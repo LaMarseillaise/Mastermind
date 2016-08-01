@@ -39,7 +39,7 @@ module Mastermind
 
       def get_player(number)
         print "What is Player #{number}'s name? "
-        Player::Human.new(name: Player::Human.get_input)
+        Player::Human.new(name: gets.chomp)
       end
 
       def get_codebreaker
