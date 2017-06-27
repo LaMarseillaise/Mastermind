@@ -5,8 +5,10 @@ module Mastermind
     def initialize(game)
       @game = game
       # 1. Create the set S of 1296 possible codes
-      @possible_guesses = Game::Piece::COLORS.repeated_permutation(game.secret_length).to_a
-      @set = Game::Piece::COLORS.repeated_permutation(game.secret_length).to_a
+      @possible_guesses = Game::Piece::COLORS.repeated_permutation(game.secret_length).to_a.map do |permutation|
+        Game::Code.from(permutation)
+      end
+      @set = @possible_guesses.dup
       @game.turns.each { |turn| prune(turn) }
     end
 
@@ -20,10 +22,11 @@ module Mastermind
     # 2. Make initial guess of 1122
     def first_guess
       first_color = Game::Piece::COLORS.sample
-      second_color = Game::Piece::COLORS.select { |color| color != first_color }.sample
-      Array.new(@game.secret_length) do |position|
+      second_color = Game::Piece::COLORS.reject { |color| color == first_color }.sample
+      sequence = Array.new(@game.secret_length) do |position|
         position < @game.secret_length / 2 ? first_color : second_color
       end
+      Game::Code.from(sequence)
     end
 
     # 5. Choose from the set of guesses with the maximum score, preferring members of S
@@ -36,21 +39,20 @@ module Mastermind
 
     # 3. Remove from S any code that would not give the same response if the guess were the code.
     def prune(turn)
-      @set.select! do |combination|
-        code = Game::Code.from(combination)
+      @set.select! do |code|
         !(turn.guess == code) &&
         turn.exact   == code.exact_matches_with(turn.guess) &&
         turn.partial == code.partial_matches_with(turn.guess)
       end
 
-      @possible_guesses.delete(turn.guess.sequence.map(&:color))
+      @possible_guesses.reject! { |guess| turn.guess == guess }
     end
 
     # 4. For each possible guess, find the minimum highest match count
     def minimum_match_count
       lowest = @set.length
       @possible_guesses.each do |possible|
-        count = highest_match_count(Game::Code.from(possible))
+        count = highest_match_count(possible)
         lowest = count if count < lowest
       end
       lowest
@@ -62,7 +64,7 @@ module Mastermind
       (0..@game.secret_length).each do |matches|
         # count how many possibilities in S would be retained
         count = @set.count do |combination|
-          Game::Code.from(combination).color_matches_with(guess) == matches
+          combination.color_matches_with(guess) == matches
         end
         # track the highest of these
         highest = count if count > highest
@@ -74,7 +76,7 @@ module Mastermind
     def maximum_scoring_guesses
       min_matches = minimum_match_count
       @possible_guesses.select do |possible|
-        highest_match_count(Game::Code.from(possible)) == min_matches
+        highest_match_count(possible) == min_matches
       end
     end
   end

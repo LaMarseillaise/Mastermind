@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe Knuth do
-  let(:secret) { [:red, :red] }
-  let(:guess) { [:blue, :blue] }
+  let(:secret) { Game::Code.from([:red, :red]) }
+  let(:guess) { Game::Code.from([:blue, :blue]) }
   let(:game) { Game.new(secret: secret) }
 
   let(:knuth) { Knuth.new(game) }
@@ -33,7 +33,7 @@ describe Knuth do
 
     it "guesses two different colors" do
       first_guess = knuth.first_guess
-      10.times { expect(first_guess.first).not_to eq(first_guess.last) }
+      10.times { expect(first_guess.sequence.first).not_to eq(first_guess.sequence.last) }
     end
   end
 

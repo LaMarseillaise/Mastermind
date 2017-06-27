@@ -5,14 +5,13 @@ describe Player::Computer do
   let(:game) { Game.new }
 
   describe "#get_code" do
-    it "captures an array with the given length" do
-      expect(computer.get_code(length: 4).length).to eq 4
+    it "returns a code" do
+      expect(computer.get_code(length: 1)).to be_a Game::Code
     end
 
-    it "captures an array of valid colors" do
-      computer.get_code(length: 4).each do |color|
-        expect(Game::Piece::COLORS).to include color
-      end
+    it "returns a code with the given length" do
+      expect(computer.get_code(length: 4).length).to eq 4
+      expect(computer.get_code(length: 3).length).to eq 3
     end
   end
 

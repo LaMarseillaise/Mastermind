@@ -11,7 +11,7 @@ module Mastermind
           sequence << color
         end
 
-        sequence
+        Game::Code.from(sequence)
       end
 
       def get_guess_for(game)

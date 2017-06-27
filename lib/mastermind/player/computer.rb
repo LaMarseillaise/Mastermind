@@ -7,7 +7,7 @@ module Mastermind
       end
 
       def get_code(length:)
-        Array.new(length) { Game::Piece::COLORS.sample }
+        Game::Code.random(length)
       end
     end
   end

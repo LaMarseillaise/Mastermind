@@ -1,8 +1,8 @@
 require "spec_helper"
 
 describe Game do
-  let(:secret) { [:red, :red, :red, :red] }
-  let(:guess) { [:blue, :blue, :blue, :blue] }
+  let(:secret) { Game::Code.from([:red, :red, :red, :red]) }
+  let(:guess) { Game::Code.from([:blue, :blue, :blue, :blue]) }
 
   let(:game) { Game.new(secret: secret) }
 
@@ -13,7 +13,7 @@ describe Game do
 
     it "adds the guess to the history of guesses" do
       game.guess(guess)
-      expect(game.turns.map(&:guess)).to include(Game::Code.from(guess))
+      expect(game.turns.map(&:guess)).to include(guess)
     end
   end
 
