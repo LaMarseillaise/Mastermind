@@ -42,7 +42,7 @@ module Mastermind
 
       def self.attempt_line(turn, width: 4)
         "#{turn.number}:".ljust(4) +
-        SIDE + guess_bar(turn.guess.sequence) + BLANK * (width - turn.guess.sequence.length) + SIDE +
+        SIDE + guess_bar(turn.guess.sequence) + BLANK * (width - turn.guess.length) + SIDE +
         feedback_line(exact: turn.exact, partial: turn.partial, width: width) + SIDE
       end
 
