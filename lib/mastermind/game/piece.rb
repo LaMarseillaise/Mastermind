@@ -6,7 +6,7 @@ module Mastermind
       attr_reader :color
 
       def initialize(color: COLORS.sample)
-        raise ArgumentError.new("Invalid color.") unless COLORS.include?(color)
+        raise ArgumentError.new("Invalid color: #{color}.") unless COLORS.include?(color)
         @color = color
       end
 
