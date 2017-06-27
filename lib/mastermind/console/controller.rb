@@ -3,10 +3,11 @@ module Mastermind
     class Controller
       def setup
         puts View.introduction
-        print "How many players will there be? "
+        print "How many human players will there be? "
         number_of_players = Player::Human.get_input.to_i
 
-        @player1 = get_player(1)
+        @player1 = get_player(1) if number_of_players > 0
+        @player1 ||= Player::Computer.new(name: "Computer (1)")
         @player2 = get_player(2) if number_of_players > 1
         @player2 ||= Player::Computer.new(name: "Computer")
       end
